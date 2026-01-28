@@ -6,7 +6,7 @@
     'category': 'Subcontract Management',
     'author': 'AZ',
     'depends': ['base'],
-        
+    'data': ['views/subcontract_order_views.xml'],   
     'installable': True,
     'application': True,
 }
