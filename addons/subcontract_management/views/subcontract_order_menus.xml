@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem id="subcontract_order_menu_root" name="Subcontract Orders">
+        <menuitem id="subcontract_order_menu_properties" name="Properties">
+            <menuitem
+                id="subcontract_order_menu_properties_action"
+                action="subcontract_order_action"/>
+        </menuitem>
+    </menuitem>
+
+</odoo>

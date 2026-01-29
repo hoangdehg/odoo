@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_subcontract_order,access_subcontract_order,model_subcontract_order,base.group_user,1,1,1,1
+access_subcontract_order_line,access_subcontract_order_line,model_subcontract_order_line,base.group_user,1,1,1,1
+access_subcontract_material_order,access_subcontract_material_order,model_subcontract_material_order,base.group_user,1,1,1,1
+access_subcontract_material_order_line,access_subcontract_material_order_line,model_subcontract_material_order_line,base.group_user,1,1,1,1

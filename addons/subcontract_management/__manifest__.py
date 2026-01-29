@@ -5,8 +5,9 @@
     'description': 'A minimal module for subcontract management',
     'category': 'Subcontract Management',
     'author': 'AZ',
-    'depends': ['base'],
-    'data': ['views/subcontract_order_views.xml'],   
+    'depends': ['base', 'stock', 'product'],
+    'data': ['views/subcontract_order_views.xml', 'security/ir.model.access.csv', 
+             'views/subcontract_order_menus.xml'],   
     'installable': True,
     'application': True,
 }
