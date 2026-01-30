@@ -25,6 +25,10 @@ class EstateProperty(models.Model):
             ('west', 'West'),
         ],
         string='Garden Orientation',)
+    property_type_id = fields.Many2one(
+        'estate.property.type',
+        string="Property Type"
+    )
     active = fields.Boolean(default=True)
     state = fields.Selection(selection=[
         ('new', 'New'), ('offer_received', 'Offer Received'), ('offer_accepted', 'Offer Accepted'),
