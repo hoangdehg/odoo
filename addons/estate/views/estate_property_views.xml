@@ -27,29 +27,58 @@
         <field name="name">estate.property.form</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-            <form string="My new house">
+            <form>
                 <sheet>
-                    <group>
-                        <field name="name"/>
-                        <field name="description"/>
-                        <field name="postcode"/>
-                        <field name="date_availability"/>
-                        <field name="expected_price"/>
-                        <field name="selling_price"/>
-                        <field name="bedrooms"/>
-                        <field name="living_area"/>
-                        <field name="facades"/>
-                        <field name="garage"/>
-                        <field name="garden"/>
-                        <field name="garden_area"/>
-                        <field name="garden_orientation"/>
-                        <field name="state"/>
-                        <field name="property_type_id"/>
+                    <div class="oe_title">
+                        <h1 class="mb32">
+                            <field name="name" class="mb16"/>
+                        </h1>
+                        <field name="active" invisible="1"/>
+                    </div>
+                    
+
+                    <!-- TOP INFO: 2 COLUMNS -->
+                    <group col="2">
+                        <group>
+                            <field name="postcode"/>
+                            <field name="date_availability"/>
+                        </group>
+                        <group>
+                            <field name="expected_price"/>
+                            <field name="selling_price"/>
+                        </group>
                     </group>
+
+                    <!-- TABS -->
+                    <notebook>
+                        <page string="Description">
+                            <group>
+                                <field name="description"/>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="bedrooms"/>
+                                    <field name="living_area"/>
+                                    <field name="facades"/>
+                                    <field name="garage"/>
+                                    <field name="garden"/>
+                                    <field name="garden_area"/>
+                                    <field name="garden_orientation"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Other Info">
+                            <group>
+                                <field name="buyer_id"/>
+                                <field name="salesperson_id"/>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
     </record>
+
 
     <record id="view_estate_property_search" model="ir.ui.view">
         <field name="name">estate.property.search</field>
