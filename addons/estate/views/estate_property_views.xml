@@ -19,6 +19,7 @@
                 <field name="selling_price"/>
                 <field name="date_availability"/>
                 <field name="property_type_id"/>
+                <field name="tag_ids"/>
             </tree>
         </field>
     </record>
@@ -32,6 +33,7 @@
                     <div class="oe_title">
                         <h1 class="mb32">
                             <field name="name" class="mb16"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
                         </h1>
                         <field name="active" invisible="1"/>
                     </div>
@@ -40,6 +42,7 @@
                     <!-- TOP INFO: 2 COLUMNS -->
                     <group col="2">
                         <group>
+                            <field name="property_type_id"/>
                             <field name="postcode"/>
                             <field name="date_availability"/>
                         </group>
@@ -92,6 +95,7 @@
                 <field name="living_area"/>
                 <field name="facades"/>
                 <field name="property_type_id"/>
+                <field name="tag_ids" widget="many2many_tags"/>
                 <separator/>
 
                 <filter string="New" name="filter_available" domain="['|',('state', '=', 'new'),('state', '=', 'offer_received')]"/>
