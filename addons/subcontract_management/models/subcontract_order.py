@@ -36,6 +36,19 @@ class SubcontractOrder(models.Model):
     receiver_phone = fields.Char(string="Số điện thoại")
     receiver_address = fields.Char(string="Địa chỉ")
 
+    def action_confirm(self):
+        self.write({'state': 'waiting_deposit'})
+
+    def action_deposit_done(self):
+        self.write({'state': 'waiting_return'})
+
+    def action_return_done(self):
+        self.write({'state': 'waiting_delivery'})
+
+    def action_done(self):
+        self.write({'state': 'done'})
+
+
     @api.onchange('receiver_is_customer', 'partner_id')
     def _onchange_receiver_is_customer(self):
         for record in self:

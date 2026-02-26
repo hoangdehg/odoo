@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.exceptions import UserError
 from odoo.tools.date_utils import relativedelta
 from datetime import timedelta
 
@@ -39,6 +40,7 @@ class EstateProperty(models.Model):
         ('sold', 'Sold'), ('canceled', 'Canceled')], required=True, default='new', copy = False)
     total_area = fields.Integer(compute='_compute_total_area', string="Total Area")
     best_price = fields.Float(compute='_compute_best_price', string="Best Offer")
+    status = fields.Selection(selection=[('sold', 'Sold'), ('canceled', 'Canceled')], string="Status")
 
     @api.depends('living_area', 'garden_area')
     def _compute_total_area(self):
@@ -59,3 +61,18 @@ class EstateProperty(models.Model):
         else:
             self.garden_area = 0
             self.garden_orientation = False
+    
+    def action_sold(self):
+        for record in self:
+            if record.status == False:
+                record.status = 'sold'
+            elif record.status == 'canceled':
+                raise UserError("Canceled properties cannot be sold.")
+        return True
+    def action_cancel(self):
+        for record in self:
+            if record.status == False:
+                record.status = 'canceled'
+            elif record.status == 'sold':
+                raise UserError("Sold properties cannot be canceled.")
+        return True

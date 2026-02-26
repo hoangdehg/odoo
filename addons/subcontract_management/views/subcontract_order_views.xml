@@ -1,6 +1,6 @@
 <odoo>
     <record id="subcontract_order_action" model="ir.actions.act_window">
-        <field name="name">Subcontract Orders</field>
+        <field name="name">Đơn chế tác</field>
         <field name="res_model">subcontract.order</field>
         <field name="view_mode">tree,form</field>
     </record>
@@ -14,6 +14,7 @@
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="state"/>
+                <field name="order_date"/>
                 <field name="amount_total"/>
             </tree>
         </field>
@@ -24,36 +25,77 @@
         <field name="name">subcontract.order.form</field>
         <field name="model">subcontract.order</field>
         <field name="arch" type="xml">
-            <form>
+            <form modifiers='{"readonly": [["state","=","done"]]}'>
+                <header>
+                        <field name="state" widget="statusbar"/>
+                </header>
                 <sheet>
-                    <group>
-                        <field name="name"/>
-                        <field name="partner_id"/>
-                        <field name="user_id"/>
-                        <field name="state"/>
+
+                    <!-- 2 CỘT CHÍNH -->
+                    <group col="2">
+
+                        <!-- CỘT TRÁI -->
+                        <group colspan="1" col="1">
+
+                            <group string="Thông tin khách hàng">
+                                <field name="partner_id"/>
+                                <field name="partner_phone" readonly="1"/>
+                                <field name="partner_address" readonly="1"/>
+                            </group>
+
+                            <group string="Thông tin người nhận">
+                                <field name="receiver_is_customer"
+                                    modifiers='{"readonly": [["state","!=","waiting_return"]]}'/>
+
+                                <field name="receiver_name"
+                                    modifiers='{
+                                        "readonly": [
+                                        "|",
+                                        ["receiver_is_customer","=",true],
+                                        ["state","!=","waiting_return"]
+                                        ]
+                                    }'/>
+
+                                <field name="receiver_phone"
+                                    modifiers='{
+                                        "readonly": [
+                                        "|",
+                                        ["receiver_is_customer","=",true],
+                                        ["state","!=","waiting_return"]
+                                        ]
+                                    }'/>
+
+                                <field name="receiver_address"
+                                    modifiers='{
+                                        "readonly": [
+                                        "|",
+                                        ["receiver_is_customer","=",true],
+                                        ["state","!=","waiting_return"]
+                                        ]
+                                    }'/>
+                            </group>
+
+                        </group>
+
+                        <!-- CỘT PHẢI -->
+                        <group string="Thông tin đơn hàng">
+                            <field name="name"/>
+                            <field name="order_date"/>
+                            <field name="expected_return_date"/>
+                            <field name="state" readonly="1"/>
+                        </group>
+
                     </group>
-                     <group string="Thông tin khách hàng">
-                        <field name="partner_id"/>
-                        <field name="partner_phone" readonly="1"/>
-                        <field name="partner_address" readonly="1"/>
-                    </group>
-                    <group string="Thông tin người nhận">
-                        <field name="receiver_is_customer"
-                            modifiers="{'readonly': [('state', '!=', 'waiting_return')]}"/>
-                        <field name="receiver_name"
-                            modifiers="{'readonly': ['|',('receiver_is_customer', '=', True),('state', '!=', 'waiting_return')]}"/>
-                        <field name="receiver_phone"
-                            modifiers="{'readonly': ['|',('receiver_is_customer', '=', True),('state', '!=', 'waiting_return')]}"/>
-                        <field name="receiver_address"
-                            modifiers="{'readonly': ['|',('receiver_is_customer', '=', True),('state', '!=', 'waiting_return')]}"/>
-                    </group>
+
+                    <!-- TAB SẢN PHẨM -->
                     <notebook>
                         <page string="Sản phẩm">
                             <field name="line_ids"
-                                    options="{'no_create': True, 'no_create_edit': True}">
+                                options='{"no_create": true, "no_create_edit": true}'
+                                modifiers='{"readonly": [["state","not in",["draft","waiting_deposit"]]]}'>
                                 <tree>
                                     <field name="product_id"
-                                        options="{'no_create': True, 'no_create_edit': True}"/>
+                                        options='{"no_create": true, "no_create_edit": true}'/>
                                     <field name="uom_id" readonly="1"/>
                                     <field name="quantity"/>
                                     <field name="price_unit"/>
@@ -62,11 +104,14 @@
                             </field>
                         </page>
                     </notebook>
+
+                    <!-- FOOTER -->
                     <group col="2" class="oe_subtotal_footer oe_right">
                         <field name="amount_total" readonly="1"/>
                         <field name="deposit_amount"/>
                         <field name="amount_remaining" readonly="1"/>
                     </group>
+
                 </sheet>
             </form>
         </field>
