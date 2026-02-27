@@ -7,13 +7,11 @@ class EstatePropertyOffer(models.Model):
     _description = "Estate Property Offer"
 
     price = fields.Float(string = "Price")
-    status = fields.Selection(
-        selection=[('accepted', 'Accepted'),('refused', 'Refused'),], copy = False, string = "Status")
     partner_id = fields.Many2one("res.partner", string="Partner", required=True)
     property_id = fields.Many2one("estate.property", string="Property", required=True)
     validity = fields.Integer(default=7, string="Validity (days)")
     date_deadline = fields.Date(string="deadline", compute="_compute_date_deadline", inverse="_inverse_date_deadline")
-    status_offer = fields.Selection(selection=[('accepted', 'Accepted'), ('rejected', 'Rejected')], string="Status")
+    status_offer = fields.Selection(selection=[('accepted', 'Accepted'), ('rejected', 'Rejected')],copy = False, string="Status")
 
     @api.depends("create_date", "validity")
     def _compute_date_deadline(self):
