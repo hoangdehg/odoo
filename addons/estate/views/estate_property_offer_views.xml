@@ -1,5 +1,4 @@
 <odoo>
-
     <record id="view_estate_property_offer_tree" model="ir.ui.view">
         <field name="name">estate.property.offer.tree</field>
         <field name="model">estate.property.offer</field>
